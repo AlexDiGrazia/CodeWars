@@ -30,14 +30,58 @@ function score(dice) {
 
   const totals = Object.fromEntries(hashMap);
 
-  const returnScore = () => {
-    totals[1] >= 3 ? 1000 : null;
-    totals[2] >= 3 ? 200 : null;
-    totals[3] >= 3 ? 300 : null;
-    totals[4] >= 3 ? 400 : null;
-    totals[5] >= 3 ? 500 : null;
-    totals[6] >= 3 ? 600 : null;
+  console.log(totals[1]);
+  console.log(totals);
+
+  const returnScore = (totals) => {
+    if (totals[1] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 1);
+      return { score: 1000, numbersLeft };
+    }
+    if (totals[2] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 2);
+      return { score: 200, numbersLeft };
+    }
+    if (totals[3] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 3);
+      return { score: 300, numbersLeft };
+    }
+    if (totals[4] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 4);
+      return { score: 400, numbersLeft };
+    }
+    if (totals[5] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 5);
+      return { score: 500, numbersLeft };
+    }
+    if (totals[6] >= 3) {
+      const numbersLeft = dice.filter((num) => num !== 6);
+      return { score: 600, numbersLeft };
+    }
   };
+
+  const processing = returnScore(totals);
+  console.log(processing.numbersLeft);
+
+  function remainder(numbersLeft) {
+    let sum = 0;
+    for (let number of numbersLeft) {
+      if (number === 1) {
+        sum = sum + 100;
+      }
+      if (number === 5) {
+        sum = sum + 50;
+      }
+    }
+    console.log(sum);
+    return sum;
+  }
+  const lastTwoNumbersSum = remainder(processing.numbersLeft);
+
+  console.log({ lastTwoNumbersSum });
+
+  const answer = lastTwoNumbersSum + processing.score;
+  console.log({ answer });
 }
 
 score([5, 1, 3, 4, 1]);
