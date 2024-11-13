@@ -30,38 +30,61 @@ function score(dice) {
 
   const totals = Object.fromEntries(hashMap);
 
-  console.log(totals[1]);
-  console.log(totals);
+  const removeTriplet = (value) => {
+    const newArray = dice.map((number) => number);
+    for (let i = 0; i < 3; i++) {
+      const index = newArray.indexOf(value);
+      newArray.splice(index, 1);
+    }
+    return newArray;
+  };
+
+  const tripletCounter = (dieFace) => {
+    if (totals[dieFace] >= 3) {
+      const multiple = [2, 3, 4, 5, 6].includes(dieFace) ? 100 : 1000;
+      const numbersLeft = removeTriplet(dieFace);
+      return { score: dieFace * multiple, numbersLeft };
+    }
+  };
+
+  const returns = (totals) => {
+    const diceFaces = [1, 2, 3, 4, 5, 6];
+    let returnValue;
+    for (let face of diceFaces) {
+      tripletCounter(face);
+    }
+  };
 
   const returnScore = (totals) => {
     if (totals[1] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 1);
+      const numbersLeft = removeTriplet(1);
       return { score: 1000, numbersLeft };
     }
     if (totals[2] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 2);
+      const numbersLeft = removeTriplet(2);
       return { score: 200, numbersLeft };
     }
     if (totals[3] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 3);
+      const numbersLeft = removeTriplet(3);
       return { score: 300, numbersLeft };
     }
     if (totals[4] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 4);
+      const numbersLeft = removeTriplet(4);
       return { score: 400, numbersLeft };
     }
     if (totals[5] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 5);
+      const numbersLeft = removeTriplet(5);
       return { score: 500, numbersLeft };
     }
     if (totals[6] >= 3) {
-      const numbersLeft = dice.filter((num) => num !== 6);
+      const numbersLeft = removeTriplet(6);
       return { score: 600, numbersLeft };
+    } else {
+      return { score: 0, numbersLeft: dice };
     }
   };
 
   const processing = returnScore(totals);
-  console.log(processing.numbersLeft);
 
   function remainder(numbersLeft) {
     let sum = 0;
@@ -73,15 +96,12 @@ function score(dice) {
         sum = sum + 50;
       }
     }
-    console.log(sum);
     return sum;
   }
   const lastTwoNumbersSum = remainder(processing.numbersLeft);
-
-  console.log({ lastTwoNumbersSum });
 
   const answer = lastTwoNumbersSum + processing.score;
   console.log({ answer });
 }
 
-score([5, 1, 3, 4, 1]);
+score([2, 4, 4, 5, 4]);
