@@ -104,4 +104,4 @@ function score(dice) {
   console.log({ answer });
 }
 
-score([2, 4, 4, 5, 4]);
+score([1, 1, 3, 1, 1]);
